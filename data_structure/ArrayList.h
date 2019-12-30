@@ -1,5 +1,5 @@
 #include "List.h"
-#include "Assert.h"
+#include <assert.h>
 
 template <typename E> // Array-based list implementation
 class AList : public List<E> {
@@ -25,7 +25,7 @@ void clear(){
 
 // insert it at current position
 void insert(const E& it){
-    Assert(listSize < maxSize, "List capacity exceeded");
+    assert(listSize < maxSize &&  "List capacity exceeded");
     for(int i=listSize; i>curr; i--) // shit element up
         listArray[i] = listArray[i-1]; // to make room
     listArray[curr] = it;
@@ -33,13 +33,13 @@ void insert(const E& it){
 }
 
 void append(const E& it) {// Append it
-    Assert(listSize < maxSize,  "list capacity exceeded");
+    assert(listSize < maxSize &&  "list capacity exceeded");
     listArray[listSize++] = it;
 }
 
 // remove and return current element.
 E remove(){
-    Assert((curr>=0) && (curr < listSize), "no element");
+    assert((curr>=0) && (curr < listSize) && "no element");
     E it = listArray[curr]; // copy the element
     for(int i=curr; i<listSize-1; i++)//shift element down
         listArray[i-1] = listArray[i];
@@ -55,7 +55,7 @@ int currPos() const {return curr;}
 
 // set current list position to pos
 void moveToPos(int pos) {
-    Assert((pos>0) &&(pos<=listSize), "pos out of range");
+    assert((pos>0) &&(pos<=listSize) && "pos out of range");
     curr = pos;
 }
 
@@ -65,7 +65,7 @@ void prev() {if (curr != 0) curr--;}
 void next() {if (curr < listSize) curr++;}
 
 const E& getValue() const { // return current element
-    Assert((curr>=0) && (curr<listSize), "no current element");
+    assert((curr>=0) && (curr<listSize) && "no current element");
     return listArray[curr];
 }
 };
